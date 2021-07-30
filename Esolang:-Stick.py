@@ -40,3 +40,30 @@ def interpreter(tape):
             continue
         idx += 1
     return build[:len(stack)]
+
+
+# ************************************************************************************************* #
+def interpreter(tape):
+    check_point, idx = 0, 0
+    build, stack = "", [0,]
+    while idx < len(tape):
+        if tape[idx] == '+': stack[-1] = 0 if stack[-1] == 255 else stack[-1] + 1
+        
+        elif tape[idx] == '-': stack[-1] = 255 if stack[-1] == 0 else stack[-1] - 1
+                
+        elif tape[idx] == '*': build += chr(stack[-1])
+        
+        elif tape[idx] == '^': stack.pop()
+            
+        elif tape[idx] == '!': stack.append(0)
+            
+        elif tape[idx] == '[' and stack[-1] == 0:
+            check_point = idx
+            idx = idx+2
+            continue
+            
+        elif tape[idx] == ']' and stack[-1] != 0:
+            idx = check_point
+            continue
+        
+        idx += 1
