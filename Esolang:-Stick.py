@@ -67,3 +67,4 @@ def interpreter(tape):
             continue
         
         idx += 1
+    return build[:len(stack)]
